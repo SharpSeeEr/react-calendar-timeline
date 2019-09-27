@@ -1,9 +1,9 @@
 import React from 'react'
-import { render, cleanup } from 'react-testing-library'
+import { render, cleanup } from '@testing-library/react'
 import DateHeader from 'lib/headers/DateHeader'
 import SidebarHeader from 'lib/headers/SidebarHeader'
 import TimelineHeaders from 'lib/headers/TimelineHeaders'
-import 'jest-dom/extend-expect'
+import '@testing-library/jest-dom/extend-expect'
 import { RenderHeadersWrapper } from '../../test-utility/header-renderer'
 import {
   renderSidebarHeaderWithCustomValues,
@@ -15,7 +15,7 @@ describe('Testing SidebarHeader Component', () => {
 
   //TODO: rename test
   it('Given sidebarHeader When pass style with overridden (width) Then it should not override the default values', () => {
-    const { getByTestId, debug } = renderSidebarHeaderWithCustomValues({
+    const { getByTestId } = renderSidebarHeaderWithCustomValues({
       props: { style: { width: 250 } }
     })
     const { width } = getComputedStyle(getByTestId('sidebarHeader'))

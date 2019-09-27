@@ -1,6 +1,6 @@
 import React from 'react'
-import { render, fireEvent, cleanup } from 'react-testing-library'
-import 'jest-dom/extend-expect'
+import { render, fireEvent, cleanup } from '@testing-library/react'
+import '@testing-library/jest-dom/extend-expect'
 import { RenderWrapper } from 'test-utility/marker-renderer'
 import TimelineMarkers from 'lib/markers/public/TimelineMarkers'
 import TodayMarker from 'lib/markers/public/TodayMarker'
@@ -43,13 +43,13 @@ describe('TodayMarker', () => {
       }
     }
 
-    const { queryByTestId, getByText } = render(<RemoveTodayMarker />)
+    const { getByTestId, queryByTestId, getByText } = render(<RemoveTodayMarker />)
 
-    expect(queryByTestId(defaultTestId)).toBeInTheDocument()
+    expect(getByTestId(defaultTestId)).toBeInTheDocument()
 
     fireEvent.click(getByText('Hide Today'))
 
-    expect(queryByTestId(defaultTestId)).not.toBeInTheDocument()
+    expect(queryByTestId(defaultTestId)).toBeNull()
   })
 
   it('allows for custom renderer', () => {

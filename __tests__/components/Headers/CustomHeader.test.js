@@ -1,6 +1,5 @@
 import React from 'react'
-import { render, cleanup, prettyDOM } from 'react-testing-library'
-import Timeline from 'lib/Timeline'
+import { render, cleanup } from '@testing-library/react'
 import DateHeader from 'lib/headers/DateHeader'
 import SidebarHeader from 'lib/headers/SidebarHeader'
 import TimelineHeaders from 'lib/headers/TimelineHeaders'
@@ -9,7 +8,7 @@ import { RenderHeadersWrapper } from '../../test-utility/header-renderer'
 import { getCustomHeadersInTimeline } from '../../test-utility/headerRenderers'
 import { parsePxToNumbers } from '../../test-utility/index'
 
-import 'jest-dom/extend-expect'
+import '@testing-library/jest-dom/extend-expect'
 import moment from 'moment'
 
 describe('CustomHeader Component Test', () => {
@@ -34,26 +33,26 @@ describe('CustomHeader Component Test', () => {
     expect(end.diff(start, 'M')).toBe(1)
   })
   it('Given CustomHeader When pass a style props with (width, position) Then it should not override the default values', () => {
-    const { getByTestId } = render(
+    const { getAllByTestId } = render(
       getCustomHeadersInTimeline({
         props: { style: { width: 0, position: 'fixed' } }
       })
     )
-    const { width, position } = getComputedStyle(getByTestId('customHeader'))
+    const { width, position } = getComputedStyle(getAllByTestId('customHeader')[0])
     expect(width).not.toBe('0px')
     expect(position).not.toBe('fixed')
   })
 
   it('Given CustomHeader When pass a style props other than (width, position) Then it should rendered Correctly', () => {
-    const { getByTestId } = render(
+    const { getAllByTestId } = render(
       getCustomHeadersInTimeline({ props: { style: { color: 'white' } } })
     )
-    const { color } = getComputedStyle(getByTestId('customHeader'))
+    const { color } = getComputedStyle(getAllByTestId('customHeader')[0])
     expect(color).toBe('white')
   })
 
   it('Given CustomHeader When pass an interval style with (width, position and left) Then it should not override the default values', () => {
-    const { getByTestId } = render(
+    const { getAllByTestId } = render(
       getCustomHeadersInTimeline({
         intervalStyle: {
           width: 0,
@@ -63,14 +62,14 @@ describe('CustomHeader Component Test', () => {
       })
     )
     const { width, position, left } = getComputedStyle(
-      getByTestId('customHeaderInterval')
+      getAllByTestId('customHeaderInterval')[0]
     )
     expect(width).not.toBe('0px')
     expect(position).not.toBe('fixed')
     expect(left).not.toBe('1222222px')
   })
   it('Given CustomHeader When pass an interval style other than (width, position and left) Then it should rendered correctly', () => {
-    const { getByTestId } = render(
+    const { getAllByTestId } = render(
       getCustomHeadersInTimeline({
         intervalStyle: {
           lineHeight: '30px',
@@ -87,7 +86,7 @@ describe('CustomHeader Component Test', () => {
       borderLeft,
       cursor,
       color
-    } = getComputedStyle(getByTestId('customHeaderInterval'))
+    } = getComputedStyle(getAllByTestId('customHeaderInterval')[0])
     expect(lineHeight).toBe('30px')
     expect(textAlign).toBe('center')
     expect(borderLeft).toBe('1px solid black')
@@ -279,7 +278,7 @@ describe('CustomHeader Component Test', () => {
   })
   // Render The Example In The Docs
   it('Given CustomHeader When render Then it should render Correctly in the timeline', () => {
-    const { getByTestId } = render(
+    const { getAllByTestId } = render(
       <RenderHeadersWrapper>
         <TimelineHeaders>
           <SidebarHeader>
@@ -313,6 +312,7 @@ describe('CustomHeader Component Test', () => {
                     }
                     return (
                       <div
+                        key={interval.startTime}
                         onClick={() => {
                           showPeriod(interval.startTime, interval.endTime)
                         }}
@@ -335,7 +335,7 @@ describe('CustomHeader Component Test', () => {
       </RenderHeadersWrapper>
     )
 
-    expect(getByTestId('customHeader')).toBeInTheDocument()
+    expect(getAllByTestId('customHeader')).toHaveLength(1)
   })
   it('Given Custom Header When passing react stateless component to render prop Then it should render', () => {
     const Renderer = props => {

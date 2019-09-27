@@ -1,6 +1,6 @@
 import React from 'react'
-import { render, fireEvent, cleanup } from 'react-testing-library'
-import 'jest-dom/extend-expect'
+import { render, fireEvent, cleanup } from '@testing-library/react'
+import '@testing-library/jest-dom/extend-expect'
 import TimelineMarkers from 'lib/markers/public/TimelineMarkers'
 import CursorMarker from 'lib/markers/public/CursorMarker'
 import { RenderWrapper } from 'test-utility/marker-renderer'
@@ -145,16 +145,16 @@ describe('CursorMarker', () => {
       }
     }
 
-    const { queryByTestId, getByText } = render(<RemoveCursorMarker />)
+    const { getByTestId, queryByTestId, getByText } = render(<RemoveCursorMarker />)
 
     subscribeToMouseOverMock.mock.calls[0][0]({
       isCursorOverCanvas: true
     })
 
-    expect(queryByTestId(defaultCursorMarkerTestId)).toBeInTheDocument()
+    expect(getByTestId(defaultCursorMarkerTestId)).toBeInTheDocument()
 
     fireEvent.click(getByText('Hide Cursor Marker'))
 
-    expect(queryByTestId(defaultCursorMarkerTestId)).not.toBeInTheDocument()
+    expect(queryByTestId(defaultCursorMarkerTestId)).toBeNull()
   })
 })

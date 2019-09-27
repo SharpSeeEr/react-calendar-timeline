@@ -1,16 +1,14 @@
-import { render } from 'react-testing-library'
+import { render } from '@testing-library/react'
 import SidebarHeader from 'lib/headers/SidebarHeader'
 import DateHeader from 'lib/headers/DateHeader'
 import TimelineHeaders from 'lib/headers/TimelineHeaders'
-import 'jest-dom/extend-expect'
-import 'react-testing-library/cleanup-after-each'
+import '@testing-library/jest-dom/extend-expect'
 
 import React from 'react'
 
 import { RenderHeadersWrapper } from '../../test-utility/header-renderer'
 import {
   renderSidebarHeaderWithCustomValues,
-  renderTimelineWithVariantSidebar,
   renderTimelineWithLeftAndRightSidebar
 } from '../../test-utility/headerRenderers'
 
@@ -107,19 +105,15 @@ describe('TimelineHeader', () => {
   })
 
   it('Given SidebarHeader When passing no variant prop Then it should rendered above the left sidebar', () => {
-    const {
-      getByTestId,
-      getAllByTestId
-    } = renderSidebarHeaderWithCustomValues()
+    const { getByTestId } = renderSidebarHeaderWithCustomValues()
     expect(getByTestId('sidebarHeader')).toBeInTheDocument()
     expect(getByTestId('sidebarHeader').nextElementSibling).toHaveAttribute(
       'data-testid',
       'headerContainer'
     )
-    expect(getAllByTestId('sidebarHeader')).toHaveLength(1)
   })
   it('Given SidebarHeader When passing variant prop with left value Then it should rendered above the left sidebar', () => {
-    const { getByTestId, getAllByTestId } = renderSidebarHeaderWithCustomValues(
+    const { getByTestId } = renderSidebarHeaderWithCustomValues(
       { variant: 'left' }
     )
     expect(getByTestId('sidebarHeader')).toBeInTheDocument()
@@ -127,15 +121,11 @@ describe('TimelineHeader', () => {
       'data-testid',
       'headerContainer'
     )
-    expect(getAllByTestId('sidebarHeader')).toHaveLength(1)
   })
   it('Given SidebarHeader When passing variant prop with right value Then it should rendered above the right sidebar', () => {
     const {
-      getByTestId,
       getAllByTestId,
-      debug
     } = renderSidebarHeaderWithCustomValues({ variant: 'right' })
-    expect(getByTestId('sidebarHeader')).toBeInTheDocument()
     expect(getAllByTestId('sidebarHeader')).toHaveLength(2)
     expect(
       getAllByTestId('sidebarHeader')[1].previousElementSibling

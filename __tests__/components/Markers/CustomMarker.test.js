@@ -1,6 +1,6 @@
 import React from 'react'
-import { render, fireEvent, cleanup } from 'react-testing-library'
-import 'jest-dom/extend-expect'
+import { render, fireEvent, cleanup } from '@testing-library/react'
+import '@testing-library/jest-dom/extend-expect'
 import TimelineMarkers from 'lib/markers/public/TimelineMarkers'
 import CustomMarker from 'lib/markers/public/CustomMarker'
 import { RenderWrapper } from 'test-utility/marker-renderer'
@@ -112,13 +112,13 @@ describe('CustomMarker', () => {
       }
     }
 
-    const { queryByTestId, getByText } = render(<RemoveCustomMarker />)
+    const { getByTestId, queryByTestId, getByText } = render(<RemoveCustomMarker />)
 
-    expect(queryByTestId(defaultCustomMarkerTestId)).toBeInTheDocument()
+    expect(getByTestId(defaultCustomMarkerTestId)).toBeInTheDocument()
 
     fireEvent.click(getByText('Hide Custom Marker'))
 
-    expect(queryByTestId(defaultCustomMarkerTestId)).not.toBeInTheDocument()
+    expect(queryByTestId(defaultCustomMarkerTestId)).toBeNull()
   })
   it('updates marker location after passing new date', ()=>{
     const { getByTestId, rerender } = render(
