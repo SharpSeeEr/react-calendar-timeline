@@ -76,7 +76,6 @@ export const defaultHeaderLabelFormats = {
   time: 'LLL'
 }
 
-//TODO: delete this
 export const defaultSubHeaderLabelFormats = {
   yearShort: 'YY',
   yearLong: 'YYYY',
@@ -91,4 +90,48 @@ export const defaultSubHeaderLabelFormats = {
   hourLong: 'HH:00',
   minuteShort: 'mm',
   minuteLong: 'HH:mm'
+}
+
+const hour = 'hour';
+const day = 'day';
+const week = 'week';
+const month = 'month';
+const sixmonth = 'sixmonth';
+const year = 'year';
+const twoyear = 'twoyear';
+const fiveyear = 'fiveyear';
+
+export const defaultConfig = {
+  headerLabelFormats: defaultHeaderLabelFormats,
+  subHeaderLabelFormats: defaultSubHeaderLabelFormats,
+  keys: defaultKeys,
+  timeSteps: defaultTimeSteps,
+
+  dragSnap: 1000 * 60 * 15, // 15min
+  stickyHeader: true,
+  minZoom: hour,
+  maxZoom: fiveyear,
+
+  canChangeGroup: true,
+  canMove: true,
+  canResize: 'right',
+  useResizeHandle: false,
+  canSelect: true,
+  stackItems: false,
+  itemTouchSendsClick: false,
+  clickTolerance: 3,
+}
+
+export const defaultLayout = {
+  sidebarWidth: 150,
+  rightSidebarWidth: 0,
+  lineHeight: 30,
+  itemHeightRatio: 0.65,
+  minResizeWidth: 20,
+  style: {},
+}
+
+export const defaultDesign = {
+  horizontalLineClassNamesForGroup: null,
+  verticalLineClassNamesForTime: null,
 }

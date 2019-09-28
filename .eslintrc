@@ -2,10 +2,7 @@
   "plugins": [
     "react",
     "jest",
-    "prettier",
-    "promise",
-    "import",
-    "standard"
+    "prettier"
   ],
   "env": {
     "jest/globals": true,
@@ -24,8 +21,7 @@
   "extends": [
     "eslint:recommended",
     "plugin:react/recommended",
-    "prettier",
-    "prettier/react"
+    "prettier"
   ],
   "parser": "babel-eslint",
   "parserOptions": {
