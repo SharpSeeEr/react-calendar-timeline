@@ -1,3 +1,7 @@
+import PropTypes from 'prop-types'
+
+const ConfigPropTypes = {}
+
 export const defaultKeys = {
   groupIdKey: 'id',
   groupTitleKey: 'title',
@@ -8,8 +12,21 @@ export const defaultKeys = {
   itemDivTitleKey: 'title',
   itemGroupKey: 'group',
   itemTimeStartKey: 'start_time',
-  itemTimeEndKey: 'end_time'
+  itemTimeEndKey: 'end_time',
 }
+
+ConfigPropTypes.keys = PropTypes.shape({
+  groupIdKey: PropTypes.string,
+  groupTitleKey: PropTypes.string,
+  groupRightTitleKey: PropTypes.string,
+  groupLabelKey: PropTypes.string,
+  itemIdKey: PropTypes.string,
+  itemTitleKey: PropTypes.string,
+  itemDivTitleKey: PropTypes.string,
+  itemGroupKey: PropTypes.string,
+  itemTimeStartKey: PropTypes.string,
+  itemTimeEndKey: PropTypes.string,
+});
 
 export const defaultTimeSteps = {
   second: 1,
@@ -17,8 +34,17 @@ export const defaultTimeSteps = {
   hour: 1,
   day: 1,
   month: 1,
-  year: 1
+  year: 1,
 }
+
+ConfigPropTypes.timeSteps = PropTypes.shape({
+  second: PropTypes.number,
+  minute: PropTypes.number,
+  hour: PropTypes.number,
+  day: PropTypes.number,
+  month: PropTypes.number,
+  year: PropTypes.number,
+});
 
 export const defaultHeaderFormats = {
   year: {
@@ -59,38 +85,21 @@ export const defaultHeaderFormats = {
   }
 }
 
-//TODO: delete this
-export const defaultHeaderLabelFormats = {
-  yearShort: 'YY',
-  yearLong: 'YYYY',
-  monthShort: 'MM/YY',
-  monthMedium: 'MM/YYYY',
-  monthMediumLong: 'MMM YYYY',
-  monthLong: 'MMMM YYYY',
-  dayShort: 'L',
-  dayLong: 'dddd, LL',
-  hourShort: 'HH',
-  hourMedium: 'HH:00',
-  hourMediumLong: 'L, HH:00',
-  hourLong: 'dddd, LL, HH:00',
-  time: 'LLL'
-}
+ConfigPropTypes.headerFormat = PropTypes.shape({
+  long: PropTypes.string,
+  mediumLong: PropTypes.string,
+  medium: PropTypes.string,
+  short: PropTypes.string,
+});
 
-export const defaultSubHeaderLabelFormats = {
-  yearShort: 'YY',
-  yearLong: 'YYYY',
-  monthShort: 'MM',
-  monthMedium: 'MMM',
-  monthLong: 'MMMM',
-  dayShort: 'D',
-  dayMedium: 'dd D',
-  dayMediumLong: 'ddd, Do',
-  dayLong: 'dddd, Do',
-  hourShort: 'HH',
-  hourLong: 'HH:00',
-  minuteShort: 'mm',
-  minuteLong: 'HH:mm'
-}
+ConfigPropTypes.headerFormats = PropTypes.shape({
+  year: ConfigPropTypes.headerFormat,
+  month: ConfigPropTypes.headerFormat,
+  week: ConfigPropTypes.headerFormat,
+  day: ConfigPropTypes.headerFormat,
+  hour: ConfigPropTypes.headerFormat,
+  minute: ConfigPropTypes.headerFormat,
+});
 
 const hour = 'hour';
 const day = 'day';
@@ -101,9 +110,10 @@ const year = 'year';
 const twoyear = 'twoyear';
 const fiveyear = 'fiveyear';
 
+const zoomLevelPropType = PropTypes.oneOf([hour, day, week, month, sixmonth, year, twoyear, fiveyear]);
+
 export const defaultConfig = {
-  headerLabelFormats: defaultHeaderLabelFormats,
-  subHeaderLabelFormats: defaultSubHeaderLabelFormats,
+  headerLabelFormats: defaultHeaderFormats,
   keys: defaultKeys,
   timeSteps: defaultTimeSteps,
 
@@ -122,6 +132,24 @@ export const defaultConfig = {
   clickTolerance: 3,
 }
 
+ConfigPropTypes.config = PropTypes.shape({
+  headerFormats: ConfigPropTypes.headerFormats,
+  keys: ConfigPropTypes.keys,
+  timeSteps: ConfigPropTypes.timeSteps,
+  dragSnap: PropTypes.number,
+  stickyHeader: PropTypes.bool,
+  minZoom: zoomLevelPropType,
+  maxZoom: zoomLevelPropType,
+  canChangeGroup: PropTypes.bool,
+  canMove: PropTypes.bool,
+  canResize: PropTypes.oneOf(['right', 'left', 'both', false]),
+  useResizeHandle: PropTypes.bool,
+  canSelect: PropTypes.bool,
+  stackItems: PropTypes.bool,
+  itemTouchSendsClick: PropTypes.bool,
+  clickTolerance: PropTypes.number,
+});
+
 export const defaultLayout = {
   sidebarWidth: 150,
   rightSidebarWidth: 0,
@@ -131,7 +159,25 @@ export const defaultLayout = {
   style: {},
 }
 
+ConfigPropTypes.layout = PropTypes.shape({
+  leftSidebarWidth: PropTypes.number,
+  rightSidebarWidth: PropTypes.number,
+  lineHeight: PropTypes.number,
+  itemHeightRatio: PropTypes.number,
+  minResizeWidth: PropTypes.number,
+  style: PropTypes.object,
+})
+
 export const defaultDesign = {
   horizontalLineClassNamesForGroup: null,
   verticalLineClassNamesForTime: null,
+}
+
+ConfigPropTypes.design = PropTypes.shape({
+  horizontalLineClassNamesForGroup: PropTypes.string,
+  verticalLineClassNamesForTime: PropTypes.string,
+})
+
+export {
+  ConfigPropTypes
 }

@@ -21,8 +21,8 @@ $item-zindex-selected: 82;
 $item-zindex-hover: 88;
 
 $row-height: 30px;
-$row-background-even: $header-secondary-background-color;
-$row-background-odd: $primary-color;
+$row-background-even: transparent;
+$row-background-odd: rgba(0, 0, 0, 0.05);
 
 $sidebar-color: $primary-color;
 $sidebar-background-color: $header-primary-background-color;
@@ -30,173 +30,85 @@ $sidebar-background-color: $header-primary-background-color;
 $list-item-padding: 0 4px;
 $weekend: rgba(250, 246, 225, 0.5);
 
-.demo-demo {
-  flex: 1;
-  height: 100%;
-}
 .react-calendar-timeline {
   * {
     box-sizing: border-box;
   }
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  overflow-x: scroll;
-  overflow-y: scroll;
 
-  .rct-sidebar {
-    overflow: hidden;
-    // white-space: normal; // was set to nowrap in .rct-outer
-    //display: inline-block;
-    // vertical-align: top;
-    position: sticky;
-    left: 0px;
-    box-sizing: border-box;
-    border-right: $border;
-    border-bottom: $border;
-    background-color: $sidebar-color;
-
-    &.rct-sidebar-right {
-      border-right: 0;
-      border-left: $border;
-    }
-
-    .rct-sidebar-row {
-      padding: $list-item-padding;
-      overflow: hidden;
-      white-space: nowrap;
-      text-overflow: ellipsis;
-      box-sizing: border-box;
-      margin: 0;
-      border-bottom: $border;
-
-      &:nth-child(odd) {
-        background: $row-background-odd;
-      }
-      &:nth-child(even) {
-        background: $row-background-even;
-      }
-
-      &.rct-sidebar-row-odd {
-        background: $row-background-odd;
-      }
-      &.rct-sidebar-row-even {
-        background: $row-background-even;
-      }
-    }
-  }
-
-  .rct-row {
-    position: relative;
-    height: $row-height;
-    display: flex;
-
-    &:nth-child(odd) {
-      .rct-sidebar {
-        background: $row-background-odd;
-      }
-    }
-    &:nth-child(even) {
-      .rct-sidebar {
-        background: $row-background-even;
-      }
-    }
-
-
-    .rct-row-item {
-      height: $row-height;
-      width: 55px;
-      border-left: $border;
-      border-right: $border;
-      border-bottom: $border;
-    }
-  }
-
-  .rct-header {
+  .rt-header {
     display: flex;
     width: 100%;
     background: $header-primary-background-color;
-    color: $primary-color;
     border-bottom: $border;
-    flex: 0;
 
-    .rct-sidebar {
-      background-color: inherit;
-      color: inherit;
-    }
-    .rct-header-timeline {
+    .rt-header-timeline {
       overflow: hidden;
     }
 
-    .rct-header-row {
+    .rt-header-row {
       position: relative;
       height: $row-height;
     }
 
-    .rct-header-row-primary {
+    .rt-header-row-primary {
       background-color: $header-primary-background-color;
+    }
+
+    .rt-header-row-secondary {
+      background-color: $header-secondary-background-color;
+    }
+
+    .rt-header-item {
+      position: absolute;
+      height: $row-height;
+      border-left: $border;
+      border-right: $border;
+      border-bottom: $border;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    .rt-dateHeader-interval {
+      position: relative;
+      height: 30px;
+      background-color: $header-secondary-background-color;
+      border-left: $border;
+      border-right: $border;
+    }
+
+    .rt-dateHeader-primary {
+      background-color: initial;
+      border-left:  $border;
+      border-right: $border;
       color: $primary-color;
     }
 
-    .rct-header-row-secondary {
-      background-color: $header-secondary-background-color;
-    }
-
-    .rct-header-item {
-      position: absolute;
-      height: $row-height;
-      width: 55px;
-      border-left: $border;
-      border-right: $border;
+    .rt-header-root {
+      background: $header-primary-background-color;
       border-bottom: $border;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 14px;
-      cursor: pointer;
-    }
-
-    .rct-dateHeader-interval {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-      height: 30px;
-      border-bottom: $border;
-      cursor: pointer;
-      font-size: 14px;
-      background-color: $header-secondary-background-color;
-      border-left: $border;
-      border-right: $border;
     }
   }
 
-
-  .rct-body {
-    display: flex;
+  .rt-outer {
+    display: block;
     overflow: hidden;
-    height: 100%; // calc(100% - #{$row-height * 2});
-    // white-space: nowrap;
-    flex: 1;
-    overflow-x: scroll;
-    overflow-y: scroll;
-
-    .rct-body-timeline {
-      flex: 1;
-      white-space: normal; // was set to nowrap in .rct-outer
-      border-left: $border;
-      border-right: $border;
-      // vertical-align: top;
-      // overflow-x: hidden;
-      // overflow-y: scroll;
-      -ms-touch-action: none;
-      touch-action: none;
-    }
+    white-space: nowrap;
   }
 
+  .rt-scroll {
+    display: inline-block;
+    white-space: normal; // was set to nowrap in .rt-outer
+    vertical-align: top;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    -ms-touch-action: none;
+    touch-action: none;
+  }
 
-  .rct-item {
+  .rt-item {
     position: absolute;
     box-sizing: border-box;
 
@@ -212,13 +124,13 @@ $weekend: rgba(250, 246, 225, 0.5);
       }
       &.resizable-left {
         border-left-width: 3px;
-        .rct-item-handler-left {
+        .rt-item-handler-left {
           cursor: w-resize;
         }
       }
       &.resizable-right {
         border-right-width: 3px;
-        .rct-item-handler-right {
+        .rt-item-handler-right {
           cursor: e-resize;
         }
       }
@@ -250,16 +162,16 @@ $weekend: rgba(250, 246, 225, 0.5);
       z-index: $item-zindex-hover;
     }
 
-    .rct-item-handler-left {
+    .rt-item-handler-left {
       @include item-handler();
       left: 0;
     }
-    .rct-item-handler-right {
+    .rt-item-handler-right {
       @include item-handler();
       right: 0;
     }
 
-    .rct-item-content {
+    .rt-item-content {
       position: sticky;
       position: -webkit-sticky;
       left: 0px;
@@ -271,33 +183,70 @@ $weekend: rgba(250, 246, 225, 0.5);
     }
   }
 
+  .rt-sidebar {
+    overflow: hidden;
+    white-space: normal; // was set to nowrap in .rt-outer
+    display: inline-block;
+    vertical-align: top;
+    position: relative;
+    box-sizing: border-box;
+    border-right: $border;
 
+    &.rt-sidebar-right {
+      border-right: 0;
+      border-left: $border;
+    }
+
+    .rt-sidebar-row {
+      padding: $list-item-padding;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      box-sizing: border-box;
+      margin: 0;
+      border-bottom: $border;
+
+      &:nth-child(odd) {
+        background: $row-background-odd;
+      }
+      &:nth-child(even) {
+        background: $row-background-even;
+      }
+
+      &.rt-sidebar-row-odd {
+        background: $row-background-odd;
+      }
+      &.rt-sidebar-row-even {
+        background: $row-background-even;
+      }
+    }
+  }
 
   // TODO: rename or remove once we make breaking change to rename vertical lines
   // to columns
-  .rct-vertical-lines {
-    .rct-vl {
+  .rt-vertical-lines {
+    .rt-vl {
       position: absolute;
       border-left: $border;
       z-index: 30;
-      &.rct-vl-first {
+      &.rt-vl-first {
         border-left-width: $border-width-thick;
       }
-      &.rct-day-6,
-      &.rct-day-0 {
+      &.rt-day-6,
+      &.rt-day-0 {
         background: $weekend;
       }
     }
   }
 
-  .rct-horizontal-lines {
+  .rt-horizontal-lines {
     -webkit-user-select: none;
     -moz-user-select: -moz-none;
     -ms-user-select: none;
     user-select: none;
 
-    .rct-hl-even,
-    .rct-hl-odd {
+    .rt-hl-even,
+    .rt-hl-odd {
       border-bottom: $border;
       box-sizing: border-box;
       z-index: 40;
@@ -310,15 +259,15 @@ $weekend: rgba(250, 246, 225, 0.5);
       }
     }
 
-    .rct-hl-odd {
+    .rt-hl-odd {
       background: $row-background-odd;
     }
-    .rct-hl-even {
+    .rt-hl-even {
       background: $row-background-even;
     }
   }
 
-  .rct-cursor-line {
+  .rt-cursor-line {
     position: absolute;
     width: 2px;
     background: $item-background;

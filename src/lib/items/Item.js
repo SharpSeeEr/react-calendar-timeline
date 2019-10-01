@@ -8,14 +8,19 @@ import { defaultItemRenderer } from './defaultItemRenderer'
 import { coordinateToTimeRatio } from '../utility/calendar'
 import { getSumScroll, getSumOffset } from '../utility/dom-helpers'
 
+function ItemNew({
+
+}) {
+
+}
+
 export default class Item extends Component {
   // removed prop type check for SPEED!
   // they are coming from a trusted component anyway
   // (this complicates performance debugging otherwise)
   static propTypes = {
-    canvasTimeStart: PropTypes.number.isRequired,
-    canvasTimeEnd: PropTypes.number.isRequired,
-    canvasWidth: PropTypes.number.isRequired,
+    item: PropTypes.object.isRequired,
+
     order: PropTypes.object,
 
     dragSnap: PropTypes.number,
@@ -27,8 +32,6 @@ export default class Item extends Component {
     canResizeLeft: PropTypes.bool.isRequired,
     canResizeRight: PropTypes.bool.isRequired,
 
-    keys: PropTypes.object.isRequired,
-    item: PropTypes.object.isRequired,
 
     onSelect: PropTypes.func,
     onDrag: PropTypes.func,
