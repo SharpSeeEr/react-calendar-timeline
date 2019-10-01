@@ -50,6 +50,10 @@ $weekend: rgba(250, 246, 225, 0.5);
   overflow-y: scroll;
 
   .rct-canvas {
+    width: 100%;
+    display: inline-block;
+    overflow: visible;
+    user-select: none;
     // flex: 1;
     // border-left: $border;
     // border-right: $border;
