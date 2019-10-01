@@ -5,9 +5,12 @@ $primary-color: #ffffff;
 $border-color: #bbb;
 $border-width: 1px;
 $border-width-thick: 2px;
+$border-width-thicker: 3px;
 $border-width-resize: 3px;
 
 $border: $border-width solid $border-color;
+$border-thick: $border-width-thick solid $border-color;
+$border-thicker: $border-width-thicker solid $border-color;
 
 $item-color: white;
 $item-background: #2196f3;
@@ -21,8 +24,8 @@ $item-zindex-selected: 82;
 $item-zindex-hover: 88;
 
 $row-height: 30px;
-$row-background-even: $header-secondary-background-color;
-$row-background-odd: $primary-color;
+$row-background-even: $primary-color;
+$row-background-odd: $header-secondary-background-color;
 
 $sidebar-color: $primary-color;
 $sidebar-background-color: $header-primary-background-color;
@@ -42,28 +45,132 @@ $weekend: rgba(250, 246, 225, 0.5);
   display: flex;
   flex-direction: column;
   height: 100%;
+  width: 100%;
   overflow-x: scroll;
   overflow-y: scroll;
 
+  .rct-canvas {
+    // flex: 1;
+    // border-left: $border;
+    // border-right: $border;
+    // vertical-align: top;
+    // overflow-x: hidden;
+    // overflow-y: scroll;
+  }
+  .rct-row {
+    // position: relative;
+    height: $row-height;
+    display: inline-flex;
+    z-index: 500;
+
+    &:nth-child(odd), &:nth-child(odd) .rct-sidebar {
+      background-color: $row-background-odd;
+    }
+    &:nth-child(even), &:nth-child(even) .rct-sidebar {
+      background-color: $row-background-even;
+    }
+
+
+    .rct-row-item {
+      height: $row-height;
+      border-left: $border;
+      // border-right: $border;
+      border-bottom: $border;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      &.zoom-0 {
+        width: 55px;
+        min-width: 55px;
+        max-width: 55px;
+      }
+    }
+
+
+  }
+  .rct-header {
+    height: $row-height * 2;
+    border-width: $border-width 0 $border-width-thick;
+    border-style: solid;
+    border-color: $border-color;
+    z-index: 1001;
+
+    &.rct-sticky {
+      position: sticky;
+      top: 0;
+
+      .rct-sidebar {
+        top: 0;
+      }
+    }
+
+    .rct-sidebar {
+      border-top: $border-thick;
+      // border-bottom: ;
+    }
+
+    .rct-header-timeline {
+      display: flex;
+      // flex-direction: column;
+    }
+
+    .rct-header-group {
+      display: inline-flex;
+      flex-direction: column;
+
+    }
+
+    .rct-header-primary {
+      background-color: $header-primary-background-color;
+      color: $primary-color;
+      height: $row-height;
+      border: none;
+    }
+    .rct-header-secondary {
+      background-color: $header-secondary-background-color;
+    }
+
+    .rct-row-item {
+      border-right: $border;
+      border-left-width: $border-width-thick;
+      // border-bottom-width: $border-width-thick;
+    }
+  }
+
+  $hourly-primary-width: 56px * 24;
+
+
   .rct-sidebar {
-    overflow: hidden;
+    // overflow: hidden;
     // white-space: normal; // was set to nowrap in .rct-outer
     //display: inline-block;
     // vertical-align: top;
     position: sticky;
-    left: 0px;
     box-sizing: border-box;
-    border-right: $border;
     border-bottom: $border;
-    background-color: $sidebar-color;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    padding: $list-item-padding;
+    display: flex;
+    align-items: center;
+    width: 175px;
+    min-width: 175px;
+    z-index: 1000;
 
-    &.rct-sidebar-right {
-      border-right: 0;
-      border-left: $border;
+    &.left {
+      border-right: $border-thicker;
+      left: 0px;
+    }
+
+    &.right {
+      border-left: $border-thicker;
+      right: 0px;
     }
 
     .rct-sidebar-row {
-      padding: $list-item-padding;
       overflow: hidden;
       white-space: nowrap;
       text-overflow: ellipsis;
@@ -86,92 +193,6 @@ $weekend: rgba(250, 246, 225, 0.5);
       }
     }
   }
-
-  .rct-row {
-    position: relative;
-    height: $row-height;
-    display: flex;
-
-    &:nth-child(odd) {
-      .rct-sidebar {
-        background: $row-background-odd;
-      }
-    }
-    &:nth-child(even) {
-      .rct-sidebar {
-        background: $row-background-even;
-      }
-    }
-
-
-    .rct-row-item {
-      height: $row-height;
-      width: 55px;
-      border-left: $border;
-      border-right: $border;
-      border-bottom: $border;
-    }
-  }
-
-  .rct-header {
-    display: flex;
-    width: 100%;
-    background: $header-primary-background-color;
-    color: $primary-color;
-    border-bottom: $border;
-    flex: 0;
-
-    .rct-sidebar {
-      background-color: inherit;
-      color: inherit;
-    }
-    .rct-header-timeline {
-      overflow: hidden;
-    }
-
-    .rct-header-row {
-      position: relative;
-      height: $row-height;
-    }
-
-    .rct-header-row-primary {
-      background-color: $header-primary-background-color;
-      color: $primary-color;
-    }
-
-    .rct-header-row-secondary {
-      background-color: $header-secondary-background-color;
-    }
-
-    .rct-header-item {
-      position: absolute;
-      height: $row-height;
-      width: 55px;
-      border-left: $border;
-      border-right: $border;
-      border-bottom: $border;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 14px;
-      cursor: pointer;
-    }
-
-    .rct-dateHeader-interval {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-      height: 30px;
-      border-bottom: $border;
-      cursor: pointer;
-      font-size: 14px;
-      background-color: $header-secondary-background-color;
-      border-left: $border;
-      border-right: $border;
-    }
-  }
-
 
   .rct-body {
     display: flex;
