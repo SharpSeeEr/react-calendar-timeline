@@ -1,11 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { ConfigPropTypes } from '../default-config';
 
 const EventsContext = React.createContext()
 
 function EventsProvider({
   children,
-
+  events,
   onItemMove,
   onItemResize,
   onItemClick,
@@ -84,48 +85,35 @@ function EventsProvider({
 
 EventsProvider.propTypes = {
   children: PropTypes.node,
-  onItemMove: PropTypes.func,
-  onItemResize: PropTypes.func,
-  onItemClick: PropTypes.func,
-  onItemSelect: PropTypes.func,
-  onItemDeselect: PropTypes.func,
-  onItemDrag: PropTypes.func,
-  onItemDoubleClick: PropTypes.func,
-  onItemContextMenu: PropTypes.func,
-
-  onCanvasClick: PropTypes.func,
-  onCanvasDoubleClick: PropTypes.func,
-  onCanvasContextMenu: PropTypes.func,
-  onZoom: PropTypes.func,
-
-  onTimeChange: PropTypes.func,
-  onBoundsChange: PropTypes.func,
+  events: PropTypes.shape(ConfigPropTypes.events),
 }
 
 EventsProvider.defaultProps = {
-  onItemClick: null,
-  onItemSelect: null,
-  onItemDeselect: null,
-  onItemDrag: null,
-  onItemMove: null,
-  onItemResize: null,
-  onItemDoubleClick: null,
-  onItemContextMenu: null,
+  events: {
+    onItemClick: null,
+    onItemSelect: null,
+    onItemDeselect: null,
+    onItemDrag: null,
+    onItemMove: null,
+    onItemResize: null,
+    onItemDoubleClick: null,
+    onItemContextMenu: null,
 
-  onCanvasClick: null,
-  onCanvasDoubleClick: null,
-  onCanvasContextMenu: null,
-  onZoom: null,
+    onCanvasClick: null,
+    onCanvasDoubleClick: null,
+    onCanvasContextMenu: null,
+    onZoom: null,
 
-  onTimeChange: function(
-    visibleTimeStart,
-    visibleTimeEnd,
-    updateScrollCanvas
-  ) {
-    updateScrollCanvas(visibleTimeStart, visibleTimeEnd)
-  },
-  // called when the canvas area of the calendar changes
-  onBoundsChange: null,
+    onTimeChange: function(
+      visibleTimeStart,
+      visibleTimeEnd,
+      updateScrollCanvas
+    ) {
+      updateScrollCanvas(visibleTimeStart, visibleTimeEnd)
+    },
+    // called when the canvas area of the calendar changes
+    onBoundsChange: null,
+  }
 }
 
 function useEvents() {

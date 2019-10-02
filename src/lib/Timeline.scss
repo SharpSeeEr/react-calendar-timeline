@@ -41,26 +41,31 @@ $weekend: rgba(250, 246, 225, 0.5);
   * {
     box-sizing: border-box;
   }
-  position: relative;
-  display: flex;
-  flex-direction: column;
+  // position: relative;
+  // display: flex;
+  // flex-direction: column;
   height: 100%;
   width: 100%;
-  overflow-x: scroll;
-  overflow-y: scroll;
+  // overflow-x: scroll;
+  // overflow-y: scroll;
 
   .rct-canvas {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    overflow-x: scroll;
+    overflow-y: scroll;
+  }
+
+  .rct-timeline {
     width: 100%;
     display: inline-block;
     overflow: visible;
     user-select: none;
-    // flex: 1;
-    // border-left: $border;
-    // border-right: $border;
-    // vertical-align: top;
-    // overflow-x: hidden;
-    // overflow-y: scroll;
   }
+
   .rct-row {
     // position: relative;
     height: $row-height;

@@ -1,36 +1,34 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import SidebarHeader from './SidebarHeader'
+import classnames from 'classnames'
+import Sidebar from '../Sidebar'
 import DateHeader from './DateHeader'
 import { RIGHT_VARIANT } from './constants'
 import { useCanvasState } from '../../timeline/CanvasProvider'
+import { useTimelineState } from '../../providers'
+import HeaderGroup from './HeaderGroup'
 
 
-function TimelineHeaders({
-  children,
-}) {
+function TimelineHeaders({ children }) {
 
   const { leftSidebarWidth, rightSidebarWidth } = useCanvasState()
+  const { stickyHeader } = useTimelineState()
 
-  const getCalendarHeaderStyle = () => {
-    return {
-      overflow: 'hidden',
-      width: `calc(100% - ${leftSidebarWidth + rightSidebarWidth}px)`,
-    }
-  }
+  const leftSidebarHeader = leftSidebarWidth > 0 ? <Sidebar width={leftSidebarWidth} position="left" /> : undefined
+  const rightSidebarHeader = rightSidebarWidth > 0 ? <Sidebar width={rightSidebarWidth} position="right" /> : undefined
 
-  const leftSidebarHeader = leftSidebarWidth > 0 ? <SidebarHeader width={leftSidebarWidth} /> : undefined
-  const rightSidebarHeader = rightSidebarWidth > 0 ? <SidebarHeader width={rightSidebarWidth} variant="right" /> : undefined
+  const classNames = classnames('rct-row rct-header', stickyHeader ? 'rct-sticky' : '')
 
   return (
-    <div className="rct-header">
+    <div className={classNames}>
       {leftSidebarHeader}
       <div
         className="rct-header-timeline"
         data-testid="headerContainer"
       >
-        <DateHeader unit="primaryHeader" />
-        <DateHeader />
+        <HeaderGroup date={moment({ year: 2019, month: 8, day: 30 })} />
+        <HeaderGroup date={moment({ year: 2019, month: 9, day: 1 })} />
+        <HeaderGroup date={moment({ year: 2019, month: 9, day: 2 })} />
       </div>
       {rightSidebarHeader}
     </div>

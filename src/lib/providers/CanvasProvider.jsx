@@ -47,7 +47,7 @@ CanvasProvider.defaultProps = {
 };
 
 CanvasProvider.propTypes = {
-  children: PropTypes.element.isRequired,
+  children: PropTypes.node.isRequired,
   zoomLevel: PropTypes.number,
   defaultTimeStart: PropTypes.number,
   layout: ConfigPropTypes.layout,

@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
-import React, { Component } from 'react'
+import React from 'react'
 import moment from 'moment'
-import { TimelineNew } from 'react-calendar-timeline'
+import Timeline from 'react-calendar-timeline'
 import generateFakeData from '../generate-fake-data'
 
 var minTime = moment()
@@ -23,7 +23,7 @@ var keys = {
   itemTimeEndKey: 'end'
 }
 
-export default class App extends Component {
+export default class App extends React.Component {
   constructor(props) {
     super(props)
 
@@ -138,7 +138,7 @@ export default class App extends Component {
 
     return (
       <div className="demo-demo">
-        <TimelineNew items={this.state.items} groups={this.state.groups} config={{ keys }} />
+        <Timeline items={this.state.items} groups={this.state.groups} config={{ keys }} />
       </div>
     )
   }

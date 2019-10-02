@@ -4,52 +4,22 @@ import merge from 'lodash.merge'
 import {
   defaultConfig,
   ConfigPropTypes,
-} from './default-config'
+} from '../default-config'
 
 const TimelineStateContext = React.createContext()
 
 function TimelineProvider({
   children,
-  headerFormats,
-  keys,
-  timeSteps,
-  dragSnap,
-  stickyHeader,
-  minZoom,
-  maxZoom,
-  canChangeGroup,
-  canMove,
-  canResize,
-  useResizeHandle,
-  canSelect,
-  stackItems,
-  itemTouchSendsClick,
-  clickTolerance,
+  config,
 }) {
 
-  const config = merge(
+  const mergedConfig = merge(
     { ...defaultConfig },
-    {
-      headerFormats,
-      keys,
-      timeSteps,
-      dragSnap,
-      stickyHeader,
-      minZoom,
-      maxZoom,
-      canChangeGroup,
-      canMove,
-      canResize,
-      useResizeHandle,
-      canSelect,
-      stackItems,
-      itemTouchSendsClick,
-      clickTolerance,
-    }
+    config,
   );
 
   return (
-    <TimelineStateContext.Provider value={config}>
+    <TimelineStateContext.Provider value={mergedConfig}>
       {/* <TimelineDispatchContext.Provider value={dispatch}> */}
         {children}
       {/* </TimelineDispatchContext.Provider> */}
@@ -58,8 +28,8 @@ function TimelineProvider({
 }
 
 TimelineProvider.propTypes = {
-  children: PropTypes.element.isRequired,
-  ...ConfigPropTypes.config,
+  children: PropTypes.node,
+  config: ConfigPropTypes.config,
 };
 
 function useTimelineState() {

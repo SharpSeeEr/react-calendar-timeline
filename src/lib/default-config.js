@@ -178,6 +178,26 @@ ConfigPropTypes.design = PropTypes.shape({
   verticalLineClassNamesForTime: PropTypes.string,
 })
 
+
+ConfigPropTypes.events = {
+  onItemMove: PropTypes.func,
+  onItemResize: PropTypes.func,
+  onItemClick: PropTypes.func,
+  onItemSelect: PropTypes.func,
+  onItemDeselect: PropTypes.func,
+  onItemDrag: PropTypes.func,
+  onItemDoubleClick: PropTypes.func,
+  onItemContextMenu: PropTypes.func,
+
+  onCanvasClick: PropTypes.func,
+  onCanvasDoubleClick: PropTypes.func,
+  onCanvasContextMenu: PropTypes.func,
+  onZoom: PropTypes.func,
+
+  onTimeChange: PropTypes.func,
+  onBoundsChange: PropTypes.func,
+}
+
 export {
   ConfigPropTypes
 }

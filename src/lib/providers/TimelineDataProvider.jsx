@@ -72,9 +72,11 @@ function TimelineDataProvider({
 
 TimelineDataProvider.propTypes = {
   children: PropTypes.node.isRequired,
-  groups: PropTypes.object.isRequired,
-  items: PropTypes.object.isRequired,
+  groups: PropTypes.array.isRequired,
+  items: PropTypes.array.isRequired,
 }
+
+
 
 function useTimelineDataState() {
   const context = React.useContext(DataStateContext)
