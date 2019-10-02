@@ -22,8 +22,13 @@ function Sidebar({
 
 Sidebar.propTypes = {
   children: PropTypes.node,
-  width: PropTypes.number,
+  width: PropTypes.number.isRequired,
   position: PropTypes.oneOf('left', 'right'),
+}
+
+Sidebar.defaultProps = {
+  children: undefined,
+  position: 'left',
 }
 
 export default Sidebar

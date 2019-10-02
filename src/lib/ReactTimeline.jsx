@@ -23,53 +23,34 @@ function ReactTimeline({
   config,
   layout,
   design,
+  events,
+  // onItemMove,
+  // onItemResize,
+  // onItemClick,
+  // onItemSelect,
+  // onItemDeselect,
+  // onItemDrag,
+  // onItemDoubleClick,
+  // onItemContextMenu,
 
-  onItemMove,
-  onItemResize,
-  onItemClick,
-  onItemSelect,
-  onItemDeselect,
-  onItemDrag,
-  onItemDoubleClick,
-  onItemContextMenu,
+  // onCanvasClick,
+  // onCanvasDoubleClick,
+  // onCanvasContextMenu,
+  // onZoom,
 
-  onCanvasClick,
-  onCanvasDoubleClick,
-  onCanvasContextMenu,
-  onZoom,
-
-  onTimeChange,
-  onBoundsChange,
+  // onTimeChange,
+  // onBoundsChange,
 }) {
-  const events = {
-    onItemMove,
-    onItemResize,
-    onItemClick,
-    onItemSelect,
-    onItemDeselect,
-    onItemDrag,
-    onItemDoubleClick,
-    onItemContextMenu,
-
-    onCanvasClick,
-    onCanvasDoubleClick,
-    onCanvasContextMenu,
-    onZoom,
-
-    onTimeChange,
-    onBoundsChange,
-  }
-
   const itemCount = 72
   const zoomLevel = 0
   const rowItemClassName = `rct-row-item zoom-${zoomLevel}`
 
   const getHourHeaders = () => {
-    const items = [];
+    const headers = []
     for (let i = 0; i < 24; i++) {
-      items.push(<div key={i} className={rowItemClassName}>{moment({hour: i, minute: 0}).format("HH:mm")}</div>)
+      headers.push(<div key={i} className={rowItemClassName}>{moment({hour: i, minute: 0}).format("HH:mm")}</div>)
     }
-    return items;
+    return headers
   }
 
   const getHeaderGroup = (date) => (
@@ -84,17 +65,17 @@ function ReactTimeline({
   )
 
   const getBodyItems = () => {
-    const items = [];
+    const bodyItems = []
     for (let i = 0; i < itemCount; i++) {
-      items.push(<div key={i} className={rowItemClassName}>&nbsp;</div>)
+      bodyItems.push(<div key={i} className={rowItemClassName}>&nbsp;</div>)
     }
-    return items;
+    return bodyItems
   }
   const bodyRows = groups.map(group => (
-    <div key={group[config.keys['groupIdKey']]} className="rct-row">
+    <div key={group[config.keys.groupIdKey]} className="rct-row">
       <div className="rct-sidebar left">
         <div>
-          {group[config.keys['groupIdKey']]}
+          {group[config.keys.groupIdKey]}
         </div>
       </div>
       {getBodyItems()}
@@ -106,7 +87,7 @@ function ReactTimeline({
       <TimelineProvider config={config}>
         <TimelineDataProvider groups={groups} items={items}>
           <CanvasProvider layout={layout} defaultTimeStart={defaultTimeStart} defaultZoom={defaultZoom}>
-            <EventsProvider {...events}>
+            <EventsProvider events={events}>
               <Canvas>
                 <Timeline />
                 {/* <div className="rct-timeline">
@@ -133,18 +114,29 @@ ReactTimeline.propTypes = {
   children: PropTypes.node,
 
   defaultZoom: PropTypes.number,
-  defaultTimeStart: PropTypes.object,
-  defaultTimeEnd: PropTypes.object,
+  defaultTimeStart: PropTypes.oneOf(PropTypes.date, PropTypes.shape({ format: PropTypes.func })),
+  defaultTimeEnd: PropTypes.oneOf(PropTypes.date, PropTypes.shape({ format: PropTypes.func })),
 
-  groups: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
-  items: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
-  selected: PropTypes.array,
+  groups: PropTypes.arrayOf(PropTypes.object).isRequired,
+  items: PropTypes.arrayOf(PropTypes.object).isRequired,
+  selected: PropTypes.arrayOf(PropTypes.string, PropTypes.number),
 
   config: ConfigPropTypes.config,
   layout: ConfigPropTypes.layout,
   design: ConfigPropTypes.design,
 
   ...ConfigPropTypes.events,
+}
+
+ReactTimeline.defaultProps = {
+  children: undefined,
+  defaultZoom: 0,
+  defaultTimeStart: undefined,
+  defaultTimeEnd: undefined,
+  selected: [],
+  config: {},
+  layout: {},
+  design: {}
 }
 
 export default ReactTimeline

@@ -16,12 +16,12 @@ function TimelineProvider({
   const mergedConfig = merge(
     { ...defaultConfig },
     config,
-  );
+  )
 
   return (
     <TimelineStateContext.Provider value={mergedConfig}>
       {/* <TimelineDispatchContext.Provider value={dispatch}> */}
-        {children}
+      {children}
       {/* </TimelineDispatchContext.Provider> */}
     </TimelineStateContext.Provider>
   )
@@ -29,8 +29,12 @@ function TimelineProvider({
 
 TimelineProvider.propTypes = {
   children: PropTypes.node,
-  config: ConfigPropTypes.config,
-};
+  config: ConfigPropTypes.config.isRequired,
+}
+
+TimelineProvider.defaultProps = {
+  children: undefined,
+}
 
 function useTimelineState() {
   const context = React.useContext(TimelineStateContext)

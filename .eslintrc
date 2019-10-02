@@ -16,10 +16,13 @@
     "react/no-unused-prop-types": 2,
     "react/react-in-jsx-scope": 2,
     "no-labels": 0,
-    "arrow-parens": 0
+    "arrow-parens": 0,
+    "no-plusplus": ["error", { "allowForLoopAfterthoughts": true }],
+    "semi": ["error", "never"]
   },
   "extends": [
     "eslint:recommended",
+    "airbnb",
     "plugin:react/recommended",
     "prettier"
   ],

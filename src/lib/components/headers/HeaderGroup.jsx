@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import classnames from 'classnames'
 import moment from 'moment'
 
 import { useCanvasState } from '../../providers'
@@ -12,11 +11,11 @@ function HeaderGroup({ date }) {
   const rowItemClassName = `rct-row-item zoom-${zoomLevel}`
 
   const getHourHeaders = () => {
-    const items = [];
+    const items = []
     for (let i = 0; i < 24; i++) {
       items.push(<div key={i} className={rowItemClassName}>{moment({hour: i, minute: 0}).format("HH:mm")}</div>)
     }
-    return items;
+    return items
   }
 
   return (
@@ -29,6 +28,10 @@ function HeaderGroup({ date }) {
       </div>
     </div>
   )
+}
+
+HeaderGroup.propTypes = {
+  date: PropTypes.shape({ format: PropTypes.func }).isRequired,
 }
 
 export default HeaderGroup

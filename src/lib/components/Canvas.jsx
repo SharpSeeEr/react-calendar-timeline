@@ -3,8 +3,8 @@ import PropTypes from 'prop-types'
 
 function Canvas({ children }) {
 
-  let scrollRef = React.useRef();
-  let dragRef = React.useRef({
+  const scrollRef = React.useRef()
+  const dragRef = React.useRef({
     dragStartPosition: null,
     dragLastPosition: null,
     isDragging: false,
@@ -46,7 +46,7 @@ function Canvas({ children }) {
 
   const handleMouseMove = e => {
     // this.props.onMouseMove(e)
-    //why is interacting with item important?
+    // why is interacting with item important?
     if (dragRef.current.isDragging) { // && !this.props.isInteractingWithItem
       console.log('handleMouseMove', e.pageX)
       scrollRef.current.scrollLeft += dragRef.current.dragLastPosition - e.pageX
@@ -157,7 +157,9 @@ function Canvas({ children }) {
   // }
 
   return (
-    <div className="rct-canvas"
+    <div
+      className="rct-canvas"
+      role="presentation"
       ref={scrollRef}
       onMouseDown={handleMouseDown}
       onMouseUp={handleMouseUp}
@@ -170,6 +172,10 @@ function Canvas({ children }) {
 
 Canvas.propTypes = {
   children: PropTypes.node,
+}
+
+Canvas.defaultProps = {
+  children: undefined,
 }
 
 export default Canvas

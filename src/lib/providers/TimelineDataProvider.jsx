@@ -1,13 +1,13 @@
 import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
-import { useTimelineState } from './TimelineProvider';
-import { _get } from '../utility/generic';
+import { useTimelineState } from './TimelineProvider'
+import { _get } from '../utility/generic'
 
 const DataStateContext = React.createContext()
 const DataDispatchContext = React.createContext()
 
-const UPDATE_GROUP = 'UPDATE_GROUP';
-const UPDATE_ITEM = 'UPDATE_ITEM';
+const UPDATE_GROUP = 'UPDATE_GROUP'
+const UPDATE_ITEM = 'UPDATE_ITEM'
 
 function dataReducer(state, action, keys) {
   switch (action.type) {
@@ -27,8 +27,9 @@ function dataReducer(state, action, keys) {
           [_get(action.payload, keys.itemIdkey)]: action.payload
         }
       }
+    default:
+      return state
   }
-  return state;
 }
 
 function initGroups(groups, items, keys) {
@@ -43,7 +44,7 @@ function initGroups(groups, items, keys) {
     }
   })
 
-  return groupsLookup;
+  return groupsLookup
 }
 
 function TimelineDataProvider({
@@ -72,8 +73,8 @@ function TimelineDataProvider({
 
 TimelineDataProvider.propTypes = {
   children: PropTypes.node.isRequired,
-  groups: PropTypes.array.isRequired,
-  items: PropTypes.array.isRequired,
+  groups: PropTypes.arrayOf(PropTypes.object).isRequired,
+  items: PropTypes.arrayOf(PropTypes.object).isRequired,
 }
 
 

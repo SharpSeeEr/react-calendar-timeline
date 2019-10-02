@@ -1,24 +1,25 @@
 // TODO: can we use getBoundingClientRect instead??
 // last place this is used is in "handleWheel" in ScrollElement
 export function getParentPosition(element) {
-  var xPosition = 0
-  var yPosition = 0
-  var first = true
+  let xPosition = 0
+  let yPosition = 0
+  let first = true
 
-  while (element) {
+  let parent = element
+  while (parent) {
     if (
-      !element.offsetParent &&
-      element.tagName === 'BODY' &&
-      element.scrollLeft === 0 &&
-      element.scrollTop === 0
+      !parent.offsetParent &&
+      parent.tagName === 'BODY' &&
+      parent.scrollLeft === 0 &&
+      parent.scrollTop === 0
     ) {
-      element = document.scrollingElement || element
+      parent = document.scrollingElement || parent
     }
     xPosition +=
-      element.offsetLeft - (first ? 0 : element.scrollLeft) + element.clientLeft
+      parent.offsetLeft - (first ? 0 : parent.scrollLeft) + parent.clientLeft
     yPosition +=
-      element.offsetTop - (first ? 0 : element.scrollTop) + element.clientTop
-    element = element.offsetParent
+      parent.offsetTop - (first ? 0 : parent.scrollTop) + parent.clientTop
+    parent = parent.offsetParent
     first = false
   }
   return { x: xPosition, y: yPosition }
@@ -27,23 +28,21 @@ export function getParentPosition(element) {
 export function getSumScroll(node) {
   if (node === document.body) {
     return {scrollLeft: 0, scrollTop: 0}
-  } else {
-    const parent = getSumScroll(node.parentNode)
-    return ({
-      scrollLeft: node.scrollLeft + parent.scrollLeft,
-      scrollTop: node.scrollTop + parent.scrollTop
-    })
   }
+  const parent = getSumScroll(node.parentNode)
+  return ({
+    scrollLeft: node.scrollLeft + parent.scrollLeft,
+    scrollTop: node.scrollTop + parent.scrollTop
+  })
 }
 
 export function getSumOffset(node) {
   if (node === document.body) {
     return {offsetLeft: 0, offsetTop: 0}
-  } else {
-    const parent = getSumOffset(node.offsetParent)
-    return ({
-      offsetLeft: node.offsetLeft + parent.offsetLeft,
-      offsetTop: node.offsetTop + parent.offsetTop
-    })
   }
+  const parent = getSumOffset(node.offsetParent)
+  return ({
+    offsetLeft: node.offsetLeft + parent.offsetLeft,
+    offsetTop: node.offsetTop + parent.offsetTop
+  })
 }

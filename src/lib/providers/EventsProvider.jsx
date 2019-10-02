@@ -1,28 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { ConfigPropTypes } from '../default-config';
+import { ConfigPropTypes } from '../default-config'
 
 const EventsContext = React.createContext()
 
 function EventsProvider({
   children,
   events,
-  onItemMove,
-  onItemResize,
-  onItemClick,
-  onItemSelect,
-  onItemDeselect,
-  onItemDrag,
-  onItemDoubleClick,
-  onItemContextMenu,
-
-  onCanvasClick,
-  onCanvasDoubleClick,
-  onCanvasContextMenu,
-  onZoom,
-
-  onTimeChange,
-  onBoundsChange,
 }) {
   const [state, setState] = React.useState({
     onItemMove: [],
@@ -39,7 +23,7 @@ function EventsProvider({
     onZoom: [],
     onTimeChange: [],
     onBoundsChange: [],
-  });
+  })
 
   const addEventHandler = (eventName, handler) => {
     const handlers = state[eventName]
@@ -51,6 +35,14 @@ function EventsProvider({
     }
   }
 
+  const addEventHandlers = (eventsCollection) => {
+    Object.keys(eventsCollection).forEach((key) => {
+      if (typeof eventsCollection[key] === 'function') {
+        addEventHandler(key, eventsCollection[key])
+      }
+    })
+  }
+
   const fire = (eventName, ...args) => {
     const handlers = state[eventName]
     if (!handlers) {
@@ -59,20 +51,7 @@ function EventsProvider({
     handlers.forEach(handler => handler(...args))
   }
 
-  React.useEffect(() => addEventHandler('onItemMove', onItemMove), [onItemMove])
-  React.useEffect(() => addEventHandler('onItemResize', onItemResize), [onItemResize])
-  React.useEffect(() => addEventHandler('onItemClick', onItemClick), [onItemClick])
-  React.useEffect(() => addEventHandler('onItemSelect', onItemSelect), [onItemSelect])
-  React.useEffect(() => addEventHandler('onItemDeselect', onItemDeselect), [onItemDeselect])
-  React.useEffect(() => addEventHandler('onItemDrag', onItemDrag), [onItemDrag])
-  React.useEffect(() => addEventHandler('onItemDoubleClick', onItemDoubleClick), [onItemDoubleClick])
-  React.useEffect(() => addEventHandler('onItemContextMenu', onItemContextMenu), [onItemContextMenu])
-  React.useEffect(() => addEventHandler('onCanvasClick', onCanvasClick), [onCanvasClick])
-  React.useEffect(() => addEventHandler('onCanvasDoubleClick', onCanvasDoubleClick), [onCanvasDoubleClick])
-  React.useEffect(() => addEventHandler('onCanvasContextMenu', onCanvasContextMenu), [onCanvasContextMenu])
-  React.useEffect(() => addEventHandler('onZoom', onZoom), [onZoom])
-  React.useEffect(() => addEventHandler('onTimeChange', onTimeChange), [onTimeChange])
-  React.useEffect(() => addEventHandler('onBoundsChange', onBoundsChange), [onBoundsChange])
+  addEventHandlers(events)
 
   const [contextState] = React.useState({ addEventHandler, fire })
 
@@ -89,6 +68,7 @@ EventsProvider.propTypes = {
 }
 
 EventsProvider.defaultProps = {
+  children: undefined,
   events: {
     onItemClick: null,
     onItemSelect: null,
@@ -103,14 +83,7 @@ EventsProvider.defaultProps = {
     onCanvasDoubleClick: null,
     onCanvasContextMenu: null,
     onZoom: null,
-
-    onTimeChange: function(
-      visibleTimeStart,
-      visibleTimeEnd,
-      updateScrollCanvas
-    ) {
-      updateScrollCanvas(visibleTimeStart, visibleTimeEnd)
-    },
+    onTimeChange: null,
     // called when the canvas area of the calendar changes
     onBoundsChange: null,
   }
@@ -121,7 +94,7 @@ function useEvents() {
   if (context === undefined) {
     throw new Error('useCanvasState must be used within an EventsProvider')
   }
-  return context;
+  return context
 }
 
 export {

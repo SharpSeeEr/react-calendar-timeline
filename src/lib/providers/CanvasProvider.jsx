@@ -1,12 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { defaultLayout, ConfigPropTypes } from '../default-config';
+import { defaultLayout, ConfigPropTypes } from '../default-config'
 
 const CanvasStateContext = React.createContext()
 const CanvasDispatchContext = React.createContext()
 
 function canvasReducer(state, action) {
-  return { ...state, ...action.payload };
+  return { ...state, ...action.payload }
 }
 
 const initialCanvasState = {
@@ -31,7 +31,7 @@ function CanvasProvider({
     timeStart: defaultTimeStart,
     zoomLevel,
     layout
-  });
+  })
 
   return (
     <CanvasStateContext.Provider value={state}>
@@ -39,12 +39,12 @@ function CanvasProvider({
         {children}
       </CanvasDispatchContext.Provider>
     </CanvasStateContext.Provider>
-  );
+  )
 }
 
 CanvasProvider.defaultProps = {
   ...initialCanvasState
-};
+}
 
 CanvasProvider.propTypes = {
   children: PropTypes.node.isRequired,
@@ -58,7 +58,7 @@ function useCanvasState() {
   if (context === undefined) {
     throw new Error('useCanvasState must be used within a CanvasProvider')
   }
-  return context;
+  return context
 }
 
 function useCanvasDispatch() {
@@ -66,7 +66,7 @@ function useCanvasDispatch() {
   if (context === undefined) {
     throw new Error('useCanvasDispatch must be used within a CanvasProvider')
   }
-  return context;
+  return context
 }
 
 export {
