@@ -80,7 +80,7 @@ $weekend: rgba(250, 246, 225, 0.5);
     }
 
 
-    .rct-row-item {
+    .rct-row-cell {
       height: $row-height;
       border-left: $border;
       // border-right: $border;
@@ -141,7 +141,7 @@ $weekend: rgba(250, 246, 225, 0.5);
       background-color: $header-secondary-background-color;
     }
 
-    .rct-row-item {
+    .rct-row-cell {
       border-right: $border;
       border-left-width: $border-width-thick;
       // border-bottom-width: $border-width-thick;

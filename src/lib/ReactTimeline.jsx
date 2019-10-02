@@ -8,6 +8,7 @@ import {
   EventsProvider
 } from './providers'
 import { Canvas, Timeline } from './components'
+import { TimelineHeader } from './components/headers'
 import { ConfigPropTypes } from './default-config'
 
 function ReactTimeline({
@@ -89,7 +90,9 @@ function ReactTimeline({
           <CanvasProvider layout={layout} defaultTimeStart={defaultTimeStart} defaultZoom={defaultZoom}>
             <EventsProvider events={events}>
               <Canvas>
-                <Timeline />
+                <Timeline>
+                  <TimelineHeader />
+                </Timeline>
                 {/* <div className="rct-timeline">
                   <div className="rct-row rct-header rct-sticky">
                     <div className="rct-sidebar left">Sidebar Header</div>

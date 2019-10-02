@@ -26,7 +26,7 @@ ConfigPropTypes.keys = PropTypes.shape({
   itemGroupKey: PropTypes.string,
   itemTimeStartKey: PropTypes.string,
   itemTimeEndKey: PropTypes.string,
-});
+})
 
 export const defaultTimeSteps = {
   second: 1,
@@ -44,7 +44,7 @@ ConfigPropTypes.timeSteps = PropTypes.shape({
   day: PropTypes.number,
   month: PropTypes.number,
   year: PropTypes.number,
-});
+})
 
 export const defaultHeaderFormats = {
   year: {
@@ -90,7 +90,7 @@ ConfigPropTypes.headerFormat = PropTypes.shape({
   mediumLong: PropTypes.string,
   medium: PropTypes.string,
   short: PropTypes.string,
-});
+})
 
 ConfigPropTypes.headerFormats = PropTypes.shape({
   year: ConfigPropTypes.headerFormat,
@@ -99,18 +99,29 @@ ConfigPropTypes.headerFormats = PropTypes.shape({
   day: ConfigPropTypes.headerFormat,
   hour: ConfigPropTypes.headerFormat,
   minute: ConfigPropTypes.headerFormat,
-});
+})
 
-const hour = 'hour';
-const day = 'day';
-const week = 'week';
-const month = 'month';
-const sixmonth = 'sixmonth';
-const year = 'year';
-const twoyear = 'twoyear';
-const fiveyear = 'fiveyear';
+const HOUR = 'HOUR'
+const DAY = 'DAY'
+const WEEK = 'WEEK'
+const MONTH = 'MONTH'
+const SIXMONTH = 'SIXMONTH'
+const YEAR = 'YEAR'
+const TWOYEAR = 'TWOYEAR'
+const FIVEYEAR = 'FIVEYEAR'
 
-const zoomLevelPropType = PropTypes.oneOf([hour, day, week, month, sixmonth, year, twoyear, fiveyear]);
+export const timespans = [
+  HOUR,
+  DAY,
+  WEEK,
+  MONTH,
+  SIXMONTH,
+  YEAR,
+  TWOYEAR,
+  FIVEYEAR,
+]
+
+const zoomLevelPropType = PropTypes.oneOf(timespans)
 
 export const defaultConfig = {
   headerLabelFormats: defaultHeaderFormats,
@@ -119,8 +130,8 @@ export const defaultConfig = {
 
   dragSnap: 1000 * 60 * 15, // 15min
   stickyHeader: true,
-  minZoom: hour,
-  maxZoom: fiveyear,
+  minZoom: HOUR,
+  maxZoom: FIVEYEAR,
 
   canChangeGroup: true,
   canMove: true,
@@ -148,7 +159,7 @@ ConfigPropTypes.config = PropTypes.shape({
   stackItems: PropTypes.bool,
   itemTouchSendsClick: PropTypes.bool,
   clickTolerance: PropTypes.number,
-});
+})
 
 export const defaultLayout = {
   sidebarWidth: 150,
